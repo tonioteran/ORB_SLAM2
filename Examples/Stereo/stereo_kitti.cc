@@ -26,6 +26,7 @@
 #include<chrono>
 
 #include<opencv2/core/core.hpp>
+#include<opencv2/highgui/highgui.hpp> /*extra fix for CV_LOAD_IMAGE_UNCHANGED*/
 
 #include<System.h>
 
@@ -66,8 +67,8 @@ int main(int argc, char **argv)
     for(int ni=0; ni<nImages; ni++)
     {
         // Read left and right images from file
-        imLeft = cv::imread(vstrImageLeft[ni],CV_LOAD_IMAGE_UNCHANGED);
-        imRight = cv::imread(vstrImageRight[ni],CV_LOAD_IMAGE_UNCHANGED);
+        imLeft = cv::imread(vstrImageLeft[ni],-1); // manual fix
+        imRight = cv::imread(vstrImageRight[ni],-1); // manual fix
         double tframe = vTimestamps[ni];
 
         if(imLeft.empty())
