@@ -1,0 +1,9 @@
+%YAML:1.0
+image_dir: "/home/data/TS74T3R1/OpticsMount_0_Images/"
+image_name_prefix: "LeftRight"
+image_extension: "bmp"
+num_of_images: 1240
+#num_of_images: 20
+# initial_image_num: 250
+initial_image_num: 0
+
