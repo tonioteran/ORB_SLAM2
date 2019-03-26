@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.13)
 project(ORB_SLAM2)
 
 IF(NOT CMAKE_BUILD_TYPE)
@@ -28,7 +28,8 @@ endif()
 
 LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules)
 
-find_package(OpenCV 3.0 QUIET)
+#find_package(OpenCV 3.0 QUIET)
+find_package(OpenCV QUIET)
 if(NOT OpenCV_FOUND)
    find_package(OpenCV 2.4.3 QUIET)
    if(NOT OpenCV_FOUND)
@@ -36,8 +37,11 @@ if(NOT OpenCV_FOUND)
    endif()
 endif()
 
-find_package(Eigen3 3.1.0 REQUIRED)
+# find_package(Eigen3 3.1.0 REQUIRED)
+find_package(Eigen3 3.3 REQUIRED)
 find_package(Pangolin REQUIRED)
+
+find_package(dynamic-slam REQUIRED)
 
 include_directories(
 ${PROJECT_SOURCE_DIR}
@@ -71,7 +75,7 @@ src/Viewer.cc
 )
 
 target_link_libraries(${PROJECT_NAME}
-${OpenCV_LIBS}
+  ${OpenCV_LIBS}
 ${EIGEN3_LIBS}
 ${Pangolin_LIBRARIES}
 ${PROJECT_SOURCE_DIR}/Thirdparty/DBoW2/lib/libDBoW2.so
@@ -95,6 +99,10 @@ target_link_libraries(stereo_kitti ${PROJECT_NAME})
 add_executable(stereo_euroc
 Examples/Stereo/stereo_euroc.cc)
 target_link_libraries(stereo_euroc ${PROJECT_NAME})
+
+add_executable(stereo_vertigo Examples/Stereo/stereo_vertigo.cc)
+target_link_libraries(stereo_vertigo ${PROJECT_NAME} dynamic-slam)
+
 
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Examples/Monocular)
